@@ -1,5 +1,6 @@
 package com.spring.handler.datahandlerspring11.services.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.handler.datahandlerspring11.model.User;
 import com.spring.handler.datahandlerspring11.sqlmapper.UserMapper;
 import com.spring.handler.datahandlerspring11.services.UserService;
@@ -8,6 +9,9 @@ import com.spring.handler.datahandlerspring11.utils.GuidUtil;
 import com.spring.handler.datahandlerspring11.utils.MapToObj;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

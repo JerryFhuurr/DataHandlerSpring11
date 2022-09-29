@@ -2,6 +2,7 @@ package com.spring.handler.datahandlerspring11.rediscontroller;
 
 import com.spring.handler.datahandlerspring11.model.User;
 import com.spring.handler.datahandlerspring11.services.UserService;
+import com.spring.handler.datahandlerspring11.services.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
