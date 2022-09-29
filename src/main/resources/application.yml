@@ -9,6 +9,19 @@ spring:
     # need to change the password here if the device is different
     password: BJYbae-7532154
 
+  redis:
+    host: redis-14587.c54.ap-northeast-1-2.ec2.cloud.redislabs.com
+    port: 14587
+    password: BJYbae-7532154
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 500
+        min-idle: 0
+    lettuce:
+      shutdown-timeout: 0
+
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.data.spring.dataspringhandler.model
@@ -22,15 +35,3 @@ pagehelper:
   #  support-methods-arguments: true
   params: count=countsql
 
-redis:
-  host: redis-14587.c54.ap-northeast-1-2.ec2.cloud.redislabs.com
-  port: 14587
-  password: BJYbae-7532154
-  jedis:
-    pool:
-      max-active: 8
-      max-wait: -1
-      max-idle: 500
-      min-idle: 0
-  lettuce:
-    shutdown-timeout: 0

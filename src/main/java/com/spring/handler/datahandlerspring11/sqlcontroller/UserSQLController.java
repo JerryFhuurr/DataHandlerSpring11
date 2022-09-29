@@ -1,7 +1,7 @@
 package com.spring.handler.datahandlerspring11.sqlcontroller;
 
 import com.spring.handler.datahandlerspring11.model.User;
-import com.spring.handler.datahandlerspring11.sqlservice.UserService;
+import com.spring.handler.datahandlerspring11.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -12,7 +12,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/users/sql")
-public class UserController {
+public class UserSQLController {
     @Autowired
     UserService userServiceSQL;
 
@@ -22,13 +22,13 @@ public class UserController {
     }
 
     @GetMapping("get/byId")
-    public User getUserById(String id) {
-        return userServiceSQL.getUserById(id);
+    public User getUserById(String id) throws Exception {
+        return userServiceSQL.getUserById(id, 0);
     }
 
     @PostMapping("addUser")
     public String addSingleUser(@Validated @RequestBody User user) {
-        userServiceSQL.addSingleUser(user);
+        userServiceSQL.addSingleUser(user, 0);
         return user.getUserId() + " is added";
     }
 
