@@ -22,8 +22,8 @@ public class UserController {
     }
 
     @GetMapping("get/single/id")
-    public User getSingleUserById(String id) throws NullPointerException {
-        return userServices.getUserById(id);
+    public User getSingleUserById(String id, String currentId) throws NullPointerException {
+        return userServices.getUserById(id, currentId);
     }
 
     @PostMapping("add/single")

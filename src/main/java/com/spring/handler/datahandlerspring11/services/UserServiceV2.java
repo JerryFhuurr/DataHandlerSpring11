@@ -9,7 +9,7 @@ import java.util.List;
 public interface UserServiceV2 {
     List<User> getAllUsers();
 
-    User getUserById(String userId) throws Exception;
+    User getUserById(String userId, String currentId) throws Exception;
 
     User getUserByUsername(String userName);
 

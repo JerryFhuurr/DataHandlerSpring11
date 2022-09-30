@@ -39,17 +39,20 @@ public class UserServiceImplV2 implements UserServiceV2 {
      * Steps:
      * 1. Find redis db first, if you find the user and return
      * 2. If not go to MYSQL, if you find the user add it to redis and return it
-     *
      * @param userId
-     * @return User object
+     * @param currentId
+     * @return
+     * @throws NullPointerException
      */
     @Override
-    public User getUserById(String userId) throws NullPointerException {
+    public User getUserById(String userId, String currentId) throws NullPointerException {
         User user;
         String userGet = redisTemplate.opsForValue().get(userId).toString();
         if (!userGet.equals(null)) {
             user = JSON.parseObject(userGet, User.class);
-            user.setUserPassword(AESUtils.decrypt(user.getUserPassword(), AESPassword));
+            if (userId.equals(currentId)){
+                user.setUserPassword(AESUtils.decrypt(user.getUserPassword(), AESPassword));
+            }
         } else {
             // find user in mysql and add it to redis
             user = userMapper.getUserById(userId);
@@ -62,7 +65,6 @@ public class UserServiceImplV2 implements UserServiceV2 {
     }
 
     private void addToRedis(User user) {
-        user.setUserPassword(AESUtils.encrypt(user.getUserPassword(), AESPassword));
         Map<String, String> userMap = new HashMap<>();
         userMap.put("userId", user.getUserId());
         userMap.put("userName", user.getUserName());
@@ -99,7 +101,7 @@ public class UserServiceImplV2 implements UserServiceV2 {
     @Override
     public String deleteSingleUser(String userId, int currentUserPermission) {
         try {
-            User user = getUserById(userId);
+            User user = getUserById(userId, "0");
             if (currentUserPermission < 3) {
                 userMapper.deleteSingleUser(userId, currentUserPermission);
                 redisTemplate.delete(userId);
