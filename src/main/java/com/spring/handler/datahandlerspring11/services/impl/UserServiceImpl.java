@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
             case 0:
                 sqlMapperAdd(user);
             case 1:
-                redisAdd(id, passwordAfterEncrypt, user);
+                redisAdd(user);
         }
     }
 
@@ -89,15 +89,15 @@ public class UserServiceImpl implements UserService {
         userMapper.addSingleUser(user);
     }
 
-    private void redisAdd(String id, String passwordAfterEncrypt, User user) {
+    private void redisAdd(User user) {
         Map<String, String> values = new HashMap<>();
-        values.put("userId", id);
+        values.put("userId", user.getUserId());
         values.put("userName", user.getUserName());
-        values.put("userPassword", passwordAfterEncrypt);
+        values.put("userPassword", user.getUserPassword());
         values.put("userPermission", "3");
         values.put("userEmail", user.getUserEmail());
         values.put("userPhone", user.getUserPhone());
-        redisTemplate.opsForHash().putAll(id, values);
+        redisTemplate.opsForValue().set(user.getUserId(), user);
     }
 
     @Override
