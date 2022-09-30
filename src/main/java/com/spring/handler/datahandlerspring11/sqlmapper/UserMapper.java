@@ -15,5 +15,5 @@ public interface UserMapper {
 
     void addSingleUser(User user);
 
-    void deleteSingleUser(String userId);
+    void deleteSingleUser(String userId, int currentUserPermission);
 }

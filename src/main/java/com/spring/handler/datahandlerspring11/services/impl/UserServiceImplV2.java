@@ -40,7 +40,7 @@ public class UserServiceImplV2 implements UserServiceV2 {
      * @return User object
      */
     @Override
-    public User getUserById(String userId) {
+    public User getUserById(String userId) throws NullPointerException{
         User user;
         String userGet = redisTemplate.opsForValue().get(userId).toString();
         if (!userGet.equals(null)) {
@@ -89,8 +89,18 @@ public class UserServiceImplV2 implements UserServiceV2 {
     }
 
     @Override
-    public void deleteSingleUser(String userId) {
-        userMapper.deleteSingleUser(userId);
-        redisTemplate.delete(userId);
+    public String deleteSingleUser(String userId, int currentUserPermission) {
+        try {
+            User user = getUserById(userId);
+            if (currentUserPermission < 3) {
+                userMapper.deleteSingleUser(userId, currentUserPermission);
+                redisTemplate.delete(userId);
+                return userId + " is removed";
+            } else {
+                return "Insufficient privileges, administrator privileges are required";
+            }
+        } catch (NullPointerException e) {
+            return "Cannot find this user!";
+        }
     }
 }

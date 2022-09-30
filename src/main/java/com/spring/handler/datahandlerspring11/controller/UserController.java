@@ -22,7 +22,7 @@ public class UserController {
     }
 
     @GetMapping("get/single/id")
-    public User getSingleUserById(String id) {
+    public User getSingleUserById(String id) throws NullPointerException {
         return userServices.getUserById(id);
     }
 
@@ -33,8 +33,8 @@ public class UserController {
     }
 
     @DeleteMapping("remove/single")
-    public String removeSingleUser(String id) {
-        userServices.deleteSingleUser(id);
-        return id + " is removed";
+    public String removeSingleUser(String id, int currentUserPermission) {
+        String r = userServices.deleteSingleUser(id, currentUserPermission);
+        return r;
     }
 }

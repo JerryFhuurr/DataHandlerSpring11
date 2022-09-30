@@ -15,5 +15,5 @@ public interface UserService {
 
     void addSingleUser(User user, int type);
 
-    void deleteSingleUser(String userId);
+    void deleteSingleUser(String userId, int currentUserPermission);
 }

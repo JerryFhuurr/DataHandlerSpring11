@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteSingleUser(String userId) {
-        userMapper.deleteSingleUser(userId);
+    public void deleteSingleUser(String userId, int currentUserPermission) {
+        userMapper.deleteSingleUser(userId, currentUserPermission);
     }
 }

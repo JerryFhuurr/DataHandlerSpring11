@@ -74,7 +74,7 @@
     <!-- Delete a user -->
     <delete id="deleteSingleUser" parameterType="com.spring.handler.datahandlerspring11.model.User">
         <!-- Only the admins can delete an account -->
-        <if test="userPermission &lt; 3">
+        <if test="currentUserPermission &lt; 3">
             DELETE
             FROM user_list
             WHERE user_id = #{userId}

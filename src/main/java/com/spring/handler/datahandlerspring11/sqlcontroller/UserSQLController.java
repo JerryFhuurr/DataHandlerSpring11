@@ -33,8 +33,8 @@ public class UserSQLController {
     }
 
     @DeleteMapping("delete/byId")
-    public String removeSingleUser(String id) {
-        userServiceSQL.deleteSingleUser(id);
+    public String removeSingleUser(String id, int currentUserPermission) {
+        userServiceSQL.deleteSingleUser(id, currentUserPermission);
         return id + " is removed";
     }
 }
