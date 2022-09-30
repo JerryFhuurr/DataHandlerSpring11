@@ -1,4 +1,4 @@
-package com.spring.handler.datahandlerspring11.rediscontroller;
+package com.spring.handler.datahandlerspring11.controller.rediscontroller;
 
 import com.spring.handler.datahandlerspring11.model.User;
 import com.spring.handler.datahandlerspring11.services.UserService;

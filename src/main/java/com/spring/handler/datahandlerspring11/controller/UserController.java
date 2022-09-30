@@ -37,4 +37,14 @@ public class UserController {
         String r = userServices.deleteSingleUser(id, currentUserPermission);
         return r;
     }
+
+    @PutMapping("update/single/profile")
+    public String updateUserProfile(@RequestBody User user) {
+        return userServices.updateSingleUser(user);
+    }
+
+    @PutMapping("update/single/password")
+    public String updateUserPassword(@RequestBody User user) {
+        return userServices.updateSingleUserPassword(user);
+    }
 }

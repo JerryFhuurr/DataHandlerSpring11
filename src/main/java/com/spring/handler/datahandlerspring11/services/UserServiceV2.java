@@ -16,4 +16,8 @@ public interface UserServiceV2 {
     void addSingleUser(User user);
 
     String deleteSingleUser(String userId, int currentUserPermission);
+
+    String updateSingleUser(User user);
+
+    String updateSingleUserPassword(User user);
 }

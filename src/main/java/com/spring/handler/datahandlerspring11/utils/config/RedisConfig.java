@@ -1,4 +1,4 @@
-package com.spring.handler.datahandlerspring11.config;
+package com.spring.handler.datahandlerspring11.utils.config;
 
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;

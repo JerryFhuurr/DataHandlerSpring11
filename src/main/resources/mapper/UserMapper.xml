@@ -80,4 +80,43 @@
             WHERE user_id = #{userId}
         </if>
     </delete>
+
+    <!-- Update a user info -->
+    <update id="updateSingleUser" parameterType="com.spring.handler.datahandlerspring11.model.User">
+        UPDATE user_list
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="userPassword != null">
+                user_password = #{userPassword},
+            </if>
+            <if test="userPermission != null">
+                user_permission = #{userPermission},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName},
+            </if>
+            <if test="userEmail != null">
+                user_email = #{userEmail},
+            </if>
+            <if test="userPhone != null">
+                user_phone = #{userPhone}
+            </if>
+        </set>
+        WHERE
+        user_id = #{userId}
+    </update>
+
+    <!-- Update a user password -->
+    <update id="updateSingleUserPassword" parameterType="com.spring.handler.datahandlerspring11.model.User">
+        UPDATE user_list
+        <set>
+            <if test="userPassword != null">
+                user_password = #{userPassword}
+            </if>
+        </set>
+        WHERE
+        user_id = #{userId}
+    </update>
 </mapper>
