@@ -39,6 +39,7 @@ public class UserServiceImplV2 implements UserServiceV2 {
      * Steps:
      * 1. Find redis db first, if you find the user and return
      * 2. If not go to MYSQL, if you find the user add it to redis and return it
+     *
      * @param userId
      * @param currentId
      * @return
@@ -50,7 +51,7 @@ public class UserServiceImplV2 implements UserServiceV2 {
         String userGet = redisTemplate.opsForValue().get(userId).toString();
         if (!userGet.equals(null)) {
             user = JSON.parseObject(userGet, User.class);
-            if (userId.equals(currentId)){
+            if (userId.equals(currentId)) {
                 user.setUserPassword(AESUtils.decrypt(user.getUserPassword(), AESPassword));
             }
         } else {
