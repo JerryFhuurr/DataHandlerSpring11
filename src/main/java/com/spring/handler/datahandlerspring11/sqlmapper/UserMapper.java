@@ -20,4 +20,5 @@ public interface UserMapper {
     void updateSingleUser(User user);
 
     void updateSingleUserPassword(User user);
+
 }

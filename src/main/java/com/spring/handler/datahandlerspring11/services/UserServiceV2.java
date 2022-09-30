@@ -20,4 +20,5 @@ public interface UserServiceV2 {
     String updateSingleUser(User user);
 
     String updateSingleUserPassword(User user);
+
 }

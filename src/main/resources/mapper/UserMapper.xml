@@ -47,6 +47,7 @@
             <if test="userPhone.length() >= 8">
                 user_phone,
             </if>
+            user_desc,
         </trim>
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -68,6 +69,7 @@
             <if test="userPhone.length() >= 8">
                 #{userPhone},
             </if>
+            #{userDesc},
         </trim>
     </insert>
 
@@ -101,8 +103,9 @@
                 user_email = #{userEmail},
             </if>
             <if test="userPhone != null">
-                user_phone = #{userPhone}
+                user_phone = #{userPhone},
             </if>
+            user_desc = #{userDesc}
         </set>
         WHERE
         user_id = #{userId}

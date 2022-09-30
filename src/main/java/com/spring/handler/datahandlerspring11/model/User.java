@@ -36,8 +36,12 @@ public class User implements Serializable {
      */
     private String userPhone;
     /**
-     * Use number
+     * User permission code
      * 1 - super admin; 2 - admin; 3 - normal user
      */
     private int userPermission;
+    /**
+     * User description
+     */
+    private String userDesc;
 }

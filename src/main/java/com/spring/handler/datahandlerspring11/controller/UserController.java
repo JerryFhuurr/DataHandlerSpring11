@@ -47,4 +47,5 @@ public class UserController {
     public String updateUserPassword(@RequestBody User user) {
         return userServices.updateSingleUserPassword(user);
     }
+
 }

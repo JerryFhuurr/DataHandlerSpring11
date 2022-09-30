@@ -13,6 +13,7 @@ import com.spring.handler.datahandlerspring11.utils.RedisKeyHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.HashMap;
 import java.util.List;
@@ -69,6 +70,7 @@ public class UserServiceImplV2 implements UserServiceV2 {
         userMap.put("userPermission", "3");
         userMap.put("userEmail", user.getUserEmail());
         userMap.put("userPhone", user.getUserPhone());
+        userMap.put("userDesc", user.getUserDesc());
         redisTemplate.opsForValue().set(user.getUserId(), userMap);
         // All the user keys in redis will be expired after 2 days
         redisTemplate.expire(user.getUserId(), 2880, TimeUnit.MINUTES);
@@ -89,6 +91,7 @@ public class UserServiceImplV2 implements UserServiceV2 {
         user.setUserEmail(user.getUserEmail());
         user.setUserPassword(passwordAfterEncrypt);
         user.setUserPhone(user.getUserPhone());
+        user.setUserDesc(user.getUserDesc());
         userMapper.addSingleUser(user);
         addToRedis(user);
     }
@@ -127,6 +130,7 @@ public class UserServiceImplV2 implements UserServiceV2 {
         userMap.put("userPermission", "3");
         userMap.put("userEmail", user.getUserEmail());
         userMap.put("userPhone", user.getUserPhone());
+        userMap.put("userDesc", user.getUserDesc());
         return userMap;
     }
 
@@ -139,6 +143,5 @@ public class UserServiceImplV2 implements UserServiceV2 {
         redisTemplate.opsForValue().set(user.getUserId(), putInfoForRedis(user));
         return "Password is updated for " + user.getUserId();
     }
-
 
 }
