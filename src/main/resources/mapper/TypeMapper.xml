@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.handler.datahandlerspring11.sqlmapper.TypeMapper">
+
+    <!-- ADD -->
+    <insert id="addSingleType" parameterType="com.spring.handler.datahandlerspring11.model.Type">
+        INSERT INTO bangumi_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="typeId != null">
+                type_id,
+            </if>
+            <if test="typeName != null">
+                type_name,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="typeId != null">
+                #{typeId},
+            </if>
+            <if test="typeName != null">
+                ##{typeName},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="addMoreType" parameterType="com.spring.handler.datahandlerspring11.model.Type">
+        INSERT INTO bangumi_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            type_id,
+            type_name,
+        </trim>
+        VALUES
+        <foreach collection="list" item="type" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="type.typeId != null">
+                    #{type.typeId},
+                </if>
+                <if test="type.typeName != null">
+                    #{type.typeName},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- DELETE -->
+    <delete id="removeType" parameterType="com.spring.handler.datahandlerspring11.model.Type">
+        DELETE
+        FROM bangumi_type
+        WHERE type_id = #{typeId}
+    </delete>
+
+    <delete id="removeTypes" parameterType="com.spring.handler.datahandlerspring11.model.Type">
+        DELETE
+        FROM bangumi_type
+        WHERE type_id IN
+        <foreach collection="list" item="typeId" separator="," open="(" close=")">
+            #{typeId}
+        </foreach>
+    </delete>
+
+    <!-- UPDATE -->
+    <update id="updateType" parameterType="com.spring.handler.datahandlerspring11.model.Type">
+        UPDATE bangumi_type
+        <set>
+            type_name = #{typeName}
+        </set>
+        WHERE type_id = #{typeId}
+    </update>
+
+    <!-- GET -->
+    <select id="getSingleType" resultType="com.spring.handler.datahandlerspring11.model.Type">
+        SELECT
+        FROM bangumi_type
+        WHERE type_id = #{typeId}
+    </select>
+
+    <select id="getAllTypes" resultType="com.spring.handler.datahandlerspring11.model.Type">
+        SELECT
+        FROM bangumi_type
+    </select>
+</mapper>
