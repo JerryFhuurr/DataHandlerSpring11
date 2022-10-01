@@ -24,10 +24,59 @@
         </trim>
     </insert>
 
+    <insert id="addMoreCompanies" parameterType="com.spring.handler.datahandlerspring11.model.Company">
+        INSERT INTO company
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            company_id,
+            company_name,
+        </trim>
+        VALUES
+        <foreach collection="list" item="company" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="company.companyId != null">
+                    #{company.companyId},
+                </if>
+                <if test="company.companyName != null">
+                    #{company.companyName},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
     <!-- DELETE -->
     <delete id="removeCompany" parameterType="com.spring.handler.datahandlerspring11.model.Company">
-        <if test="currentUserPermission &lt; 3">
-            DELETE FROM company WHERE company_id = #{companyId}
-        </if>
+        DELETE
+        FROM company
+        WHERE company_id = #{companyId}
     </delete>
+
+    <delete id="removeCompanies" parameterType="com.spring.handler.datahandlerspring11.model.Company">
+        DELETE
+        FROM company
+        WHERE company_id IN
+        <foreach collection="list" item="companyId" separator="," open="(" close=")">
+            #{companyId}
+        </foreach>
+    </delete>
+
+    <!-- GET -->
+    <select id="getCompanyById" resultType="com.spring.handler.datahandlerspring11.model.Company">
+        SELECT *
+        FROM company
+        WHERE company_id = #{companyId}
+    </select>
+
+    <select id="getAllCompany" resultType="com.spring.handler.datahandlerspring11.model.Company">
+        SELECT *
+        FROM company
+    </select>
+
+    <!-- UPDATE -->
+    <update id="updateCompany" parameterType="com.spring.handler.datahandlerspring11.model.Company">
+        UPDATE company
+        <set>
+            company_name = #{companyName}
+        </set>
+        WHERE company_id = #{companyId}
+    </update>
 </mapper>

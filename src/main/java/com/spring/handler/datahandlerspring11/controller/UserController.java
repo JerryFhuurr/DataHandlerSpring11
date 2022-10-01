@@ -2,6 +2,7 @@ package com.spring.handler.datahandlerspring11.controller;
 
 import com.spring.handler.datahandlerspring11.model.User;
 import com.spring.handler.datahandlerspring11.services.impl.UserServiceImplV2;
+import com.spring.handler.datahandlerspring11.services.validateGroup.UserValidate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -27,7 +28,7 @@ public class UserController {
     }
 
     @PostMapping("add/single")
-    public String addSingleUser(@Validated @RequestBody User user) {
+    public String addSingleUser(@Validated(UserValidate.class) @RequestBody User user) {
         userServices.addSingleUser(user);
         return user.getUserId() + " is added";
     }
@@ -39,12 +40,12 @@ public class UserController {
     }
 
     @PutMapping("update/single/profile")
-    public String updateUserProfile(@RequestBody User user) {
+    public String updateUserProfile(@Validated(UserValidate.class) @RequestBody User user) {
         return userServices.updateSingleUser(user);
     }
 
     @PutMapping("update/single/password")
-    public String updateUserPassword(@RequestBody User user) {
+    public String updateUserPassword(@Validated(UserValidate.class) @RequestBody User user) {
         return userServices.updateSingleUserPassword(user);
     }
 
