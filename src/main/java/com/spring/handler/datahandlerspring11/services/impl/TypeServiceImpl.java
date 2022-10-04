@@ -3,6 +3,7 @@ package com.spring.handler.datahandlerspring11.services.impl;
 import com.spring.handler.datahandlerspring11.model.Type;
 import com.spring.handler.datahandlerspring11.services.TypeService;
 import com.spring.handler.datahandlerspring11.sqlmapper.TypeMapper;
+import com.spring.handler.datahandlerspring11.sqlmapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -57,27 +58,53 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
-    public void removeType(int id, int currentPermission) {
-
+    public String removeType(int id, int currentPermission) {
+        if (currentPermission < 3) {
+            typeMapper.removeType(id);
+            return "Type id " + id + " removed";
+        } else {
+            return "Insufficient permission";
+        }
     }
 
     @Override
-    public void removeTypes(List<Integer> ids, int currentPermission) {
-
+    public String removeTypes(List<Integer> ids, int currentPermission) {
+        if (currentPermission < 3) {
+            typeMapper.removeTypes(ids);
+            String idString = "Id ";
+            for (var id :
+                    ids) {
+                idString += id;
+            }
+            idString += " removed";
+            return idString;
+        } else {
+            return "Insufficient permission";
+        }
     }
 
     @Override
-    public void updateType(Type type, int currentPermission) {
-
+    public String updateType(Type type, int currentPermission) {
+        Type typeGet = typeMapper.getSingleType(type);
+        if (typeGet == null) {
+            return "ERROR: Cannot find the type";
+        } else {
+            if (currentPermission < 3) {
+                typeMapper.updateType(type);
+                return type.getTypeId() + " updated";
+            } else {
+                return "Insufficient permission";
+            }
+        }
     }
 
     @Override
     public Type getSingleType(Type type) {
-        return null;
+        return typeMapper.getSingleType(type);
     }
 
     @Override
     public List<Type> getAllTypes() {
-        return null;
+        return typeMapper.getAllTypes();
     }
 }

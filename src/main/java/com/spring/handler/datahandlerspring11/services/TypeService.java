@@ -11,11 +11,11 @@ public interface TypeService {
 
     String addMoreType(List<Type> types);
 
-    void removeType(int id, int currentPermission);
+    String removeType(int id, int currentPermission);
 
-    void removeTypes(List<Integer> ids, int currentPermission);
+    String removeTypes(List<Integer> ids, int currentPermission);
 
-    void updateType(Type type, int currentPermission);
+    String updateType(Type type, int currentPermission);
 
     Type getSingleType(Type type);
 
