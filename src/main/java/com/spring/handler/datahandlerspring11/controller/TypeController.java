@@ -4,10 +4,7 @@ import com.spring.handler.datahandlerspring11.model.Type;
 import com.spring.handler.datahandlerspring11.services.TypeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,8 +16,8 @@ public class TypeController {
     TypeService typeServices;
 
     @GetMapping("get/single")
-    public Type getSingleType(Type type) {
-        return typeServices.getSingleType(type);
+    public Type getSingleType(int id) {
+        return typeServices.getSingleType(id);
     }
 
     @GetMapping("get/all")
@@ -29,7 +26,27 @@ public class TypeController {
     }
 
     @PostMapping("add/single")
-    public String addSingle(Type type) {
+    public String addSingle(@RequestBody Type type) {
         return typeServices.addSingleType(type);
+    }
+
+    @PostMapping("add/more")
+    public String addMore(@RequestBody List<Type> types) {
+        return typeServices.addMoreType(types);
+    }
+
+    @DeleteMapping("delete/single")
+    public String deleteType(int id, int currentPermission) {
+        return typeServices.removeType(id, currentPermission);
+    }
+
+    @DeleteMapping("delete/more")
+    public String deleteTypes(@RequestBody List<Integer> ids, int currentPermission) {
+        return typeServices.removeTypes(ids, currentPermission);
+    }
+
+    @PutMapping("update")
+    public String updateType(@RequestBody Type type, int currentPermission) {
+        return typeServices.updateType(type, currentPermission);
     }
 }

@@ -17,7 +17,7 @@ public interface TypeMapper {
 
     void updateType(Type type);
 
-    Type getSingleType(Type type);
+    Type getSingleType(int id);
 
     List<Type> getAllTypes();
 }

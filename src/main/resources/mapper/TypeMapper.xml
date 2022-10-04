@@ -19,7 +19,7 @@
                 #{typeId},
             </if>
             <if test="typeName != null">
-                ##{typeName},
+                #{typeName},
             </if>
         </trim>
     </insert>
@@ -70,13 +70,13 @@
 
     <!-- GET -->
     <select id="getSingleType" resultType="com.spring.handler.datahandlerspring11.model.Type">
-        SELECT
+        SELECT *
         FROM bangumi_type
         WHERE type_id = #{typeId}
     </select>
 
     <select id="getAllTypes" resultType="com.spring.handler.datahandlerspring11.model.Type">
-        SELECT
+        SELECT *
         FROM bangumi_type
     </select>
 </mapper>

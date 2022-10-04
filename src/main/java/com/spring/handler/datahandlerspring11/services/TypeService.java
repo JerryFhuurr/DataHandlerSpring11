@@ -17,7 +17,7 @@ public interface TypeService {
 
     String updateType(Type type, int currentPermission);
 
-    Type getSingleType(Type type);
+    Type getSingleType(int id);
 
     List<Type> getAllTypes();
 }

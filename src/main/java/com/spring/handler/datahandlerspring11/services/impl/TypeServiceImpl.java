@@ -6,6 +6,7 @@ import com.spring.handler.datahandlerspring11.sqlmapper.TypeMapper;
 import com.spring.handler.datahandlerspring11.sqlmapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -16,9 +17,10 @@ public class TypeServiceImpl implements TypeService {
 
     @Override
     public String addSingleType(Type type) {
-        Type typeGet = typeMapper.getSingleType(type);
+        System.out.println(type);
+        Type typeGet = typeMapper.getSingleType(type.getTypeId());
         String result = "";
-        result = (typeGet == null) ? "ERROR: The type is already existed." : addType(type);
+        result = (typeGet != null) ? "ERROR: The type is already existed." : addType(type);
         return result;
     }
 
@@ -30,7 +32,7 @@ public class TypeServiceImpl implements TypeService {
     @Override
     public String addMoreType(List<Type> types) {
         String verifyResult = verifyAddMore(types);
-        if (verifyResult.equals(null)) {
+        if (verifyResult.equals("null")) {
             typeMapper.addMoreType(types);
             return types.size() + " types added.";
         }
@@ -52,7 +54,7 @@ public class TypeServiceImpl implements TypeService {
             }
         }
         if (errorCount == 0) {
-            errorFront = null;
+            errorFront = "null";
         } else {
             errorFront += "(is) are duplicated";
         }
@@ -87,7 +89,7 @@ public class TypeServiceImpl implements TypeService {
 
     @Override
     public String updateType(Type type, int currentPermission) {
-        Type typeGet = typeMapper.getSingleType(type);
+        Type typeGet = typeMapper.getSingleType(type.getTypeId());
         if (typeGet == null) {
             return "ERROR: Cannot find the type";
         } else {
@@ -101,8 +103,8 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
-    public Type getSingleType(Type type) {
-        return typeMapper.getSingleType(type);
+    public Type getSingleType(int id) {
+        return typeMapper.getSingleType(id);
     }
 
     @Override
