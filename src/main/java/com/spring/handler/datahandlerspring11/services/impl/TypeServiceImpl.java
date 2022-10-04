@@ -5,9 +5,11 @@ import com.spring.handler.datahandlerspring11.services.TypeService;
 import com.spring.handler.datahandlerspring11.sqlmapper.TypeMapper;
 import com.spring.handler.datahandlerspring11.sqlmapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service("typeServices")
 public class TypeServiceImpl implements TypeService {
     @Autowired
     TypeMapper typeMapper;
