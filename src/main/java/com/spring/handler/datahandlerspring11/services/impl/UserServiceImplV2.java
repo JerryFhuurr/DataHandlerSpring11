@@ -46,22 +46,25 @@ public class UserServiceImplV2 implements UserServiceV2 {
      * @throws NullPointerException
      */
     @Override
-    public User getUserById(String userId, String currentId) throws NullPointerException {
+    public User getUserById(String userId, String currentId) {
         User user;
-        String userGet = redisTemplate.opsForValue().get(userId).toString();
-        if (!userGet.equals(null)) {
+        String userGet;
+        try {
+            userGet = redisTemplate.opsForValue().get(userId).toString();
             user = JSON.parseObject(userGet, User.class);
             if (userId.equals(currentId)) {
                 user.setUserPassword(AESUtils.decrypt(user.getUserPassword(), AESPassword));
             }
-        } else {
+        } catch (NullPointerException e) {
             // find user in mysql and add it to redis
             user = userMapper.getUserById(userId);
             String passwordAfterDecrypt = AESUtils.decrypt(user.getUserPassword(), AESPassword);
             user.setUserPassword(passwordAfterDecrypt);
 
             addToRedis(user);
+            getUserById(user.getUserId(), currentId);
         }
+
         return user;
     }
 

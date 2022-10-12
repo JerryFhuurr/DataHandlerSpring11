@@ -23,7 +23,7 @@ public class UserController {
     }
 
     @GetMapping("get/single/id")
-    public User getSingleUserById(String id, String currentId) throws NullPointerException {
+    public User getSingleUserById(String id, String currentId) {
         return userServices.getUserById(id, currentId);
     }
 
