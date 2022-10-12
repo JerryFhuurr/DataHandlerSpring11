@@ -11,7 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class bangumiNot {
+public class BangumiNot {
     private int bangumiNotId;
     private int bangumiId;
     private int companyId;

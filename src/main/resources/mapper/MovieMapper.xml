@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.handler.datahandlerspring11.sqlmapper.MovieMapper">
+
+    <!-- ADD -->
+    <insert id="addMovies" parameterType="com.spring.handler.datahandlerspring11.model.BangumiMovie">
+        INSERT INTO bangumi_movie
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            movie_id, movie_name_jp, movie_name_cn, movie_add_date, movie_year, movie_start_date, movie_remark,
+        </trim>
+        VALUES
+        <foreach collection="list" item="bangumiMovie" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="bangumiMovie.movieId != null">
+                    #{bangumiMovie.movieId},
+                </if>
+                <if test="bangumiMovie.movieNameJp != null">
+                    #{bangumiMovie.movieNameJp},
+                </if>
+                <if test="bangumiMovie.movieNameCn != null">
+                    #{bangumiMovie.movieNameCn},
+                </if>
+                <if test="bangumiMovie.movieAddDate != null">
+                    #{bangumiMovie.movieAddDate},
+                </if>
+                <if test="bangumiMovie.movieYear != null">
+                    #{bangumiMovie.movieYear},
+                </if>
+                <if test="bangumiMovie.movieStartDate != null">
+                    #{bangumiMovie.movieStartDate},
+                </if>
+                #{bangumiMovie.movieRemark},
+            </trim>
+        </foreach>
+    </insert>
+
+    <insert id="addSingleMovie" parameterType="com.spring.handler.datahandlerspring11.model.BangumiMovie">
+        INSERT INTO bangumi_movie
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            movie_id,
+            movie_name_jp,
+            movie_name_cn,
+            movie_add_date,
+            movie_year,
+            movie_start_date,
+            movie_remark,
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bangumiMovie.movieId != null">
+                #{bangumiMovie.movieId},
+            </if>
+            <if test="bangumiMovie.movieNameJp != null">
+                #{bangumiMovie.movieNameJp},
+            </if>
+            <if test="bangumiMovie.movieNameCn != null">
+                #{bangumiMovie.movieNameCn},
+            </if>
+            <if test="bangumiMovie.movieAddDate != null">
+                #{bangumiMovie.movieAddDate},
+            </if>
+            <if test="bangumiMovie.movieYear != null">
+                #{bangumiMovie.movieYear},
+            </if>
+            <if test="bangumiMovie.movieStartDate != null">
+                #{bangumiMovie.movieStartDate},
+            </if>
+            #{bangumiMovie.movieRemark},
+        </trim>
+    </insert>
+
+    <!-- DELETE -->
+    <delete id="removeMovies" parameterType="com.spring.handler.datahandlerspring11.model.BangumiMovie">
+        DELETE
+        FROM bangumi_movie
+        WHERE movie_id IN
+        <foreach collection="list" item="movieId" separator="," open="(" close=")">
+            #{movieId}
+        </foreach>
+    </delete>
+
+    <delete id="removeSingleMovie" parameterType="com.spring.handler.datahandlerspring11.model.BangumiMovie">
+        DELETE
+        FROM bangumi_movie
+        WHERE movie_id IN
+              #{movieId}
+    </delete>
+
+    <!-- GET -->
+    <select id="getSingleMovie" resultType="com.spring.handler.datahandlerspring11.model.BangumiMovie">
+        SELECT *
+        FROM bangumi_movie
+        WHERE bangumi_id = #{bangumiId}
+    </select>
+
+    <select id="getMovies" resultType="com.spring.handler.datahandlerspring11.model.BangumiMovie">
+        SELECT *
+        FROM bangumi_movie
+    </select>
+
+    <!-- UPDATE -->
+    <update id="updateMovie" parameterType="com.spring.handler.datahandlerspring11.model.BangumiMovie">
+        UPDATE bangumi_movie
+        <set>
+            <if test="movieId != null">
+                movie_id = #{movieId},
+            </if>
+            <if test="movieNameJp != null">
+                movie_name_jp = #{movieNameJp},
+            </if>
+            <if test="movieNameCn != null">
+                movie_name_cn = #{movieNameCn},
+            </if>
+            <if test="movieAddDate != null">
+                movie_add_date = #{movieAddDate},
+            </if>
+            <if test="movieYear != null">
+                movie_year = #{movieYear},
+            </if>
+            <if test="movieStartDate != null">
+                movie_start_date = #{movieStartDate},
+            </if>
+            movie_remark = #{movieRemark},
+        </set>
+    </update>
+</mapper>
