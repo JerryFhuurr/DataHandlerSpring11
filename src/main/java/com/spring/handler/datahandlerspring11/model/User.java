@@ -5,8 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.validation.annotation.Validated;
-
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
@@ -28,6 +27,7 @@ public class User implements Serializable {
      * Password
      */
     @NotBlank(message = "The password cannot be empty!", groups = UserValidate.class)
+    @Min(value = 6, message = "The length of password should larger than 6 !", groups = UserValidate.class)
     private String userPassword;
     /**
      * Email (used to send email to verify)
