@@ -18,4 +18,5 @@ public class BangumiFinished {
     private int typeId;
     private int finishedYear;
     private Date finishedDate;
+    private User addedUser;
 }

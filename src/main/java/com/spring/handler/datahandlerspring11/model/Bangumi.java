@@ -30,4 +30,5 @@ public class Bangumi {
      * The release date of episode 1 in Japan
      */
     private Date bangumiDate;
+    private User addedUser;
 }

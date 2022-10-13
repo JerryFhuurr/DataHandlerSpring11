@@ -18,4 +18,5 @@ public class BangumiWatchingOld {
     private int typeId;
     private Date bangumiAddDate;
     private int bangumiWatchedEpisode;
+    private User addedUser;
 }

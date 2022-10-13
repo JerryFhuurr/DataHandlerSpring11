@@ -17,4 +17,5 @@ public class BangumiNot {
     private int companyId;
     private int typeId;
     private Date bangumiAddDate;
+    private User addedUser;
 }

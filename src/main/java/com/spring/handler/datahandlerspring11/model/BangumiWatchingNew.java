@@ -28,4 +28,5 @@ public class BangumiWatchingNew {
      * Time of update
      */
     private Time bangumiUpdateTime;
+    private User addedUser;
 }

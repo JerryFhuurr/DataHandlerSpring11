@@ -17,7 +17,6 @@ public class TypeServiceImpl implements TypeService {
 
     @Override
     public String addSingleType(Type type) {
-        System.out.println(type);
         Type typeGet = typeMapper.getSingleType(type.getTypeId());
         String result = "";
         result = (typeGet != null) ? "ERROR: The type is already existed." : addType(type);
@@ -60,10 +59,11 @@ public class TypeServiceImpl implements TypeService {
         }
         if (errorCount == 0) {
             errorFront = "null";
+            return errorFront;
         } else {
             errorFront += "(is) are duplicated";
+            throw new ReqExceptions(ErrorCode.Type.TYPE_DUPLICATED, errorFront);
         }
-        throw new ReqExceptions(ErrorCode.Type.TYPE_DUPLICATED, errorFront);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class TypeServiceImpl implements TypeService {
             typeMapper.removeType(id);
             return "Type id " + id + " removed";
         } else {
-            return "Insufficient permission";
+            throw new ReqExceptions(ErrorCode.Type.TYPE_PERMISSION_INVALID, "Insufficient permission");
         }
     }
 
@@ -97,7 +97,7 @@ public class TypeServiceImpl implements TypeService {
     public String updateType(Type type, int currentPermission) {
         Type typeGet = typeMapper.getSingleType(type.getTypeId());
         if (typeGet == null) {
-            return "ERROR: Cannot find the type";
+            throw new ReqExceptions(ErrorCode.Type.TYPE_NOT_FOUND, "Cannot find the type");
         } else {
             if (currentPermission < 3) {
                 typeMapper.updateType(type);

@@ -31,4 +31,5 @@ public class BangumiMovie {
      */
     @PastOrPresent(message = "The date should be today or before!", groups = MovieValidate.class)
     private Date movieStartDate;
+    private User addedUser;
 }
