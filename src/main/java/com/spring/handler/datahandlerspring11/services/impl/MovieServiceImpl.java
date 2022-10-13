@@ -1,7 +1,9 @@
 package com.spring.handler.datahandlerspring11.services.impl;
 
 import com.spring.handler.datahandlerspring11.model.BangumiMovie;
+import com.spring.handler.datahandlerspring11.model.User;
 import com.spring.handler.datahandlerspring11.services.MovieService;
+import com.spring.handler.datahandlerspring11.services.UserServiceV2;
 import com.spring.handler.datahandlerspring11.sqlmapper.MovieMapper;
 import com.spring.handler.datahandlerspring11.utils.exceptions.ReqExceptions;
 import com.spring.handler.datahandlerspring11.utils.exceptions.common.ErrorCode;
@@ -124,7 +126,10 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public String updateMovie(BangumiMovie movie) {
-        return null;
+        if (isMovieExisted(movie.getMovieId())) {
+            mapper.updateMovie(movie);
+        }
+        return "Movie " + movie.getMovieId() + " is updated";
     }
 
     @Override
@@ -136,4 +141,5 @@ public class MovieServiceImpl implements MovieService {
     public List<BangumiMovie> getMovies() {
         return mapper.getMovies();
     }
+
 }
