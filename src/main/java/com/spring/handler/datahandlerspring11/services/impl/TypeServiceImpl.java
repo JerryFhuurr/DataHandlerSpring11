@@ -3,10 +3,10 @@ package com.spring.handler.datahandlerspring11.services.impl;
 import com.spring.handler.datahandlerspring11.model.Type;
 import com.spring.handler.datahandlerspring11.services.TypeService;
 import com.spring.handler.datahandlerspring11.sqlmapper.TypeMapper;
-import com.spring.handler.datahandlerspring11.sqlmapper.UserMapper;
+import com.spring.handler.datahandlerspring11.utils.exceptions.ReqExceptions;
+import com.spring.handler.datahandlerspring11.utils.exceptions.common.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -21,7 +21,11 @@ public class TypeServiceImpl implements TypeService {
         Type typeGet = typeMapper.getSingleType(type.getTypeId());
         String result = "";
         result = (typeGet != null) ? "ERROR: The type is already existed." : addType(type);
-        return result;
+        if (result.contains("ERROR")) {
+            throw new ReqExceptions(ErrorCode.Type.TYPE_DUPLICATED, "The type is already existed");
+        } else {
+            return result;
+        }
     }
 
     private String addType(Type type) {
@@ -41,7 +45,7 @@ public class TypeServiceImpl implements TypeService {
 
     private String verifyAddMore(List<Type> types) {
         List<Type> typesGet = typeMapper.getAllTypes();
-        String errorFront = "ERROR: The type id ";
+        String errorFront = "The type id ";
         int errorCount = 0;
         for (var type :
                 types) {
@@ -49,6 +53,7 @@ public class TypeServiceImpl implements TypeService {
                     typesGet) {
                 if (type == typeGet) {
                     errorFront += type.getTypeId();
+                    errorFront += ",";
                     errorCount++;
                 }
             }
@@ -58,7 +63,7 @@ public class TypeServiceImpl implements TypeService {
         } else {
             errorFront += "(is) are duplicated";
         }
-        return errorFront;
+        throw new ReqExceptions(ErrorCode.Type.TYPE_DUPLICATED, errorFront);
     }
 
     @Override
@@ -79,11 +84,12 @@ public class TypeServiceImpl implements TypeService {
             for (var id :
                     ids) {
                 idString += id;
+                idString += ",";
             }
             idString += " removed";
             return idString;
         } else {
-            return "Insufficient permission";
+            throw new ReqExceptions(ErrorCode.Type.TYPE_PERMISSION_INVALID, "Insufficient permission");
         }
     }
 
@@ -97,7 +103,7 @@ public class TypeServiceImpl implements TypeService {
                 typeMapper.updateType(type);
                 return type.getTypeId() + " updated";
             } else {
-                return "Insufficient permission";
+                throw new ReqExceptions(ErrorCode.Type.TYPE_PERMISSION_INVALID, "Insufficient permission");
             }
         }
     }

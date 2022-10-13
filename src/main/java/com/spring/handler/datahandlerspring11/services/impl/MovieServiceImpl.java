@@ -13,6 +13,7 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     MovieMapper mapper;
 
+    //TODO add a controller advisor in the project (try one in collect from company)
     @Override
     public String addMovies(List<BangumiMovie> movies) {
         return null;

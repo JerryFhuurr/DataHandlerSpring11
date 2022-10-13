@@ -1,10 +1,10 @@
 package com.spring.handler.datahandlerspring11.services.impl;
 
 import com.spring.handler.datahandlerspring11.model.Company;
-import com.spring.handler.datahandlerspring11.model.Type;
 import com.spring.handler.datahandlerspring11.services.CompanyService;
 import com.spring.handler.datahandlerspring11.sqlmapper.BangumiCompanyMapper;
-import org.apache.ibatis.annotations.Param;
+import com.spring.handler.datahandlerspring11.utils.exceptions.ReqExceptions;
+import com.spring.handler.datahandlerspring11.utils.exceptions.common.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ public class CompanyServiceImpl implements CompanyService {
             mapper.addCompany(company);
             return "Company id : " + company.getCompanyId() + " added";
         } else {
-            return "ERROR: The type is already existed.";
+            throw new ReqExceptions(ErrorCode.Company.COMPANY_DUPLICATED, "The type is already existed");
         }
     }
 
@@ -39,7 +39,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     private String verifyAddMore(List<Company> companies) {
         List<Company> companyList = mapper.getAllCompany();
-        String errorFront = "ERROR: The type id ";
+        String errorFront = "The type id ";
         int errorCount = 0;
         for (var company :
                 companies) {
@@ -56,7 +56,7 @@ public class CompanyServiceImpl implements CompanyService {
         } else {
             errorFront += "(is) are duplicated";
         }
-        return errorFront;
+        throw new ReqExceptions(ErrorCode.Company.COMPANY_DUPLICATED, errorFront);
     }
 
     @Override

@@ -2,8 +2,10 @@ package com.spring.handler.datahandlerspring11.controller;
 
 import com.spring.handler.datahandlerspring11.model.Type;
 import com.spring.handler.datahandlerspring11.services.TypeService;
+import com.spring.handler.datahandlerspring11.services.validateGroup.TypeValidate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,12 +28,12 @@ public class TypeController {
     }
 
     @PostMapping("add/single")
-    public String addSingle(@RequestBody Type type) {
+    public String addSingle(@RequestBody @Validated(TypeValidate.class) Type type) {
         return typeServices.addSingleType(type);
     }
 
     @PostMapping("add/more")
-    public String addMore(@RequestBody List<Type> types) {
+    public String addMore(@RequestBody @Validated(TypeValidate.class) List<Type> types) {
         return typeServices.addMoreType(types);
     }
 
@@ -46,7 +48,7 @@ public class TypeController {
     }
 
     @PutMapping("update")
-    public String updateType(@RequestBody Type type, int currentPermission) {
+    public String updateType(@RequestBody @Validated(TypeValidate.class) Type type, int currentPermission) {
         return typeServices.updateType(type, currentPermission);
     }
 }

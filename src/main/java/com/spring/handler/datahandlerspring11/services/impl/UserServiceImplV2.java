@@ -10,6 +10,8 @@ import com.spring.handler.datahandlerspring11.utils.AESUtils;
 import com.spring.handler.datahandlerspring11.utils.GuidUtil;
 import com.spring.handler.datahandlerspring11.utils.MapToObj;
 import com.spring.handler.datahandlerspring11.utils.RedisKeyHandler;
+import com.spring.handler.datahandlerspring11.utils.exceptions.ReqExceptions;
+import com.spring.handler.datahandlerspring11.utils.exceptions.common.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -111,10 +113,10 @@ public class UserServiceImplV2 implements UserServiceV2 {
                 redisTemplate.delete(userId);
                 return userId + " is removed";
             } else {
-                return "Insufficient privileges, administrator privileges are required";
+                throw new ReqExceptions(ErrorCode.User.USER_PERMISSION_INVALID, "Insufficient privileges, administrator privileges are required");
             }
         } catch (NullPointerException e) {
-            return "Cannot find this user!";
+            throw new ReqExceptions(ErrorCode.User.USER_NOT_FOUND, "Cannot find this user!");
         }
     }
 

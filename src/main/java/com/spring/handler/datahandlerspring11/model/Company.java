@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
@@ -15,6 +16,7 @@ import java.io.Serializable;
 @Builder
 public class Company implements Serializable {
     private int companyId;
+    @NotNull(message = "The company name cannot be null", groups = CompanyValidate.class)
     @NotBlank(message = "The company name cannot be null", groups = CompanyValidate.class)
     private String companyName;
 }
