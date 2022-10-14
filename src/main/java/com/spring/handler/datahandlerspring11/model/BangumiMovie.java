@@ -15,7 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class BangumiMovie {
-    private int movieId;
+    private long movieId;
     @NotBlank (message = "The name cannot be empty !", groups = MovieValidate.class)
     private String movieNameJp;
     @NotBlank (message = "The name cannot be empty !", groups = MovieValidate.class)

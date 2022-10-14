@@ -12,8 +12,8 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class BangumiFinished {
-    private int bangumiFinishedId;
-    private int bangumiId;
+    private long bangumiFinishedId;
+    private long bangumiId;
     private int companyId;
     private int typeId;
     private int finishedYear;

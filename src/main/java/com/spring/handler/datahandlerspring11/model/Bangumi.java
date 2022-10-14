@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class Bangumi {
-    private int bangumiId;
+    private long bangumiId;
     private int companyId;
     private int typeId;
     private String bangumiNameJp;
