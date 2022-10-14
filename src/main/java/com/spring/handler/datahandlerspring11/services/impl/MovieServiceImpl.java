@@ -2,13 +2,19 @@ package com.spring.handler.datahandlerspring11.services.impl;
 
 import com.spring.handler.datahandlerspring11.model.BangumiMovie;
 import com.spring.handler.datahandlerspring11.services.MovieService;
+import com.spring.handler.datahandlerspring11.services.validateGroup.MovieValidate;
 import com.spring.handler.datahandlerspring11.sqlmapper.MovieMapper;
 import com.spring.handler.datahandlerspring11.utils.exceptions.ReqExceptions;
 import com.spring.handler.datahandlerspring11.utils.exceptions.common.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service("movieServices")
@@ -18,8 +24,12 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public String addMovies(List<BangumiMovie> movies) {
-        mapper.addMovies(movies);
-        return movies.size() + " movies added.";
+        String verifyResult = verifyListDup(movies);
+        if (verifyResult.equals("null")) {
+            mapper.addMovies(movies);
+            return movies.size() + " movies added.";
+        }
+        return verifyResult;
     }
 
     private String verifyListDup(List<BangumiMovie> movies) {
@@ -48,7 +58,29 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public String addSingleMovie(BangumiMovie movie) {
-        return addMovie(movie);
+        BangumiMovie movieGet = mapper.getSingleMovie(movie.getMovieId());
+        String result = "";
+        result = (movieGet != null) ? "ERROR: The movie is already existed." : "ADD:";
+        if (result.contains("ERROR")) {
+            throw new ReqExceptions(ErrorCode.BangumiMovie.BANGUMI_MOVIE_DUPLICATED, "The movie is already existed");
+        } else {
+            Date movieAddedDate = movie.getMovieAddDate();
+            Date movieStartDate = movie.getMovieStartDate();
+            LocalDate currentDate = LocalDate.now();
+            ZoneId zone = ZoneId.systemDefault();
+            Instant instant = currentDate.atStartOfDay().atZone(zone).toInstant();
+            Date da = Date.from(instant);
+            if (movieAddedDate.before(da) || movieAddedDate.equals(da)) {
+                if (movieStartDate.before(da) || movieStartDate.equals(da)) {
+                    result += addMovie(movie);
+                    return result;
+                } else {
+                    throw new ReqExceptions(ErrorCode.BangumiMovie.BANGUMI_MOVIE_START_DATE_INVALID, "The release date is invalid");
+                }
+            } else {
+                throw new ReqExceptions(ErrorCode.BangumiMovie.BANGUMI_MOVIE_ADDED_DATE_INVALID, "The added date is invalid");
+            }
+        }
     }
 
     private String addMovie(BangumiMovie movie) {

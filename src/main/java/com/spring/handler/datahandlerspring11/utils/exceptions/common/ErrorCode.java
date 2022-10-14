@@ -45,5 +45,7 @@ public class ErrorCode {
         public static final String BANGUMI_MOVIE_NOT_FOUND = "4001";
         public static final String BANGUMI_MOVIE_REMOVE_OTHER = "4002";
         public static final String BANGUMI_MOVIE_UPDATE_USER_INVALID = "4003";
+        public static final String BANGUMI_MOVIE_ADDED_DATE_INVALID = "4004";
+        public static final String BANGUMI_MOVIE_START_DATE_INVALID = "4005";
     }
 }

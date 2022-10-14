@@ -24,7 +24,7 @@ public class BangumiMovieController {
     MovieService movieServices;
 
     @PostMapping("add/more")
-    String addMovies(@RequestBody MovieParamList paramList) {
+    String addMovies(@RequestBody @Validated(MovieValidate.class) MovieParamList paramList) {
         List<BangumiMovie> movies = paramList.getMovies();
         User currentUser = paramList.getCurrentUser();
         for (var movie :
@@ -35,7 +35,7 @@ public class BangumiMovieController {
     }
 
     @PostMapping("add/single")
-    String addSingleMovie(@RequestBody MovieParamSingle paramSingle) {
+    String addSingleMovie(@RequestBody @Validated(MovieValidate.class) MovieParamSingle paramSingle) {
         BangumiMovie movie = paramSingle.getMovie();
         User currentUser = paramSingle.getCurrentUser();
         System.out.println("user "+currentUser);
