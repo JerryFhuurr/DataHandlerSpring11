@@ -6,7 +6,8 @@
     <insert id="addMovies" parameterType="com.spring.handler.datahandlerspring11.model.BangumiMovie">
         INSERT INTO bangumi_movie
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            movie_id, movie_name_jp, movie_name_cn, movie_add_date, movie_year, movie_start_date, movie_remark,
+            movie_id, movie_name_jp, movie_name_cn, movie_add_date, movie_year, movie_start_date,
+            movie_remark, added_user,
         </trim>
         VALUES
         <foreach collection="list" item="bangumiMovie" separator=",">
@@ -30,6 +31,9 @@
                     #{bangumiMovie.movieStartDate},
                 </if>
                 #{bangumiMovie.movieRemark},
+                <if test="bangumiMovie.addedUser != null">
+                    #{bangumiMovie.addedUser},
+                </if>
             </trim>
         </foreach>
     </insert>
@@ -44,28 +48,32 @@
             movie_year,
             movie_start_date,
             movie_remark,
+            added_user,
         </trim>
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="bangumiMovie.movieId != null">
-                #{bangumiMovie.movieId},
+            <if test="movieId != null">
+                #{movieId},
             </if>
-            <if test="bangumiMovie.movieNameJp != null">
-                #{bangumiMovie.movieNameJp},
+            <if test="movieNameJp != null">
+                #{movieNameJp},
             </if>
-            <if test="bangumiMovie.movieNameCn != null">
-                #{bangumiMovie.movieNameCn},
+            <if test="movieNameCn != null">
+                #{movieNameCn},
             </if>
-            <if test="bangumiMovie.movieAddDate != null">
-                #{bangumiMovie.movieAddDate},
+            <if test="movieAddDate != null">
+                #{movieAddDate},
             </if>
-            <if test="bangumiMovie.movieYear != null">
-                #{bangumiMovie.movieYear},
+            <if test="movieYear != null">
+                #{movieYear},
             </if>
-            <if test="bangumiMovie.movieStartDate != null">
-                #{bangumiMovie.movieStartDate},
+            <if test="movieStartDate != null">
+                #{movieStartDate},
             </if>
-            #{bangumiMovie.movieRemark},
+            #{movieRemark},
+            <if test="addedUser.userId != null">
+                #{addedUser.userId},
+            </if>
         </trim>
     </insert>
 
@@ -90,7 +98,7 @@
     <select id="getSingleMovie" resultType="com.spring.handler.datahandlerspring11.model.BangumiMovie">
         SELECT *
         FROM bangumi_movie
-        WHERE bangumi_id = #{bangumiId}
+        WHERE movie_id = #{movieId}
     </select>
 
     <select id="getMovies" resultType="com.spring.handler.datahandlerspring11.model.BangumiMovie">

@@ -11,11 +11,11 @@ public interface MovieMapper {
 
     void addSingleMovie(BangumiMovie movie);
 
-    void removeMovies(List<Integer> ids);
+    void removeMovies(List<String> ids);
 
-    void removeSingleMovie(int id);
+    void removeSingleMovie(String id);
 
-    BangumiMovie getSingleMovie(int id);
+    BangumiMovie getSingleMovie(String id);
 
     List<BangumiMovie> getMovies();
 

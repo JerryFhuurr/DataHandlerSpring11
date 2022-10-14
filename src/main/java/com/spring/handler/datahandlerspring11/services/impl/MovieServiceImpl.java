@@ -1,9 +1,7 @@
 package com.spring.handler.datahandlerspring11.services.impl;
 
 import com.spring.handler.datahandlerspring11.model.BangumiMovie;
-import com.spring.handler.datahandlerspring11.model.User;
 import com.spring.handler.datahandlerspring11.services.MovieService;
-import com.spring.handler.datahandlerspring11.services.UserServiceV2;
 import com.spring.handler.datahandlerspring11.sqlmapper.MovieMapper;
 import com.spring.handler.datahandlerspring11.utils.exceptions.ReqExceptions;
 import com.spring.handler.datahandlerspring11.utils.exceptions.common.ErrorCode;
@@ -20,12 +18,8 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public String addMovies(List<BangumiMovie> movies) {
-        String verifyResult = verifyListDup(movies);
-        if (verifyResult.equals("null")) {
-            mapper.addMovies(movies);
-            return movies.size() + " movies added.";
-        }
-        return verifyResult;
+        mapper.addMovies(movies);
+        return movies.size() + " movies added.";
     }
 
     private String verifyListDup(List<BangumiMovie> movies) {
@@ -54,14 +48,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public String addSingleMovie(BangumiMovie movie) {
-        BangumiMovie movieGet = mapper.getSingleMovie(movie.getMovieId());
-        String result = "";
-        result = (movieGet != null) ? "ERROR: The movie is already existed." : addMovie(movie);
-        if (result.contains("ERROR")) {
-            throw new ReqExceptions(ErrorCode.BangumiMovie.BANGUMI_MOVIE_DUPLICATED, "The movie is already existed");
-        } else {
-            return result;
-        }
+        return addMovie(movie);
     }
 
     private String addMovie(BangumiMovie movie) {
@@ -70,10 +57,10 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public String removeMovies(List<Integer> ids) {
+    public String removeMovies(List<String> ids) {
         List<BangumiMovie> moviesGet = getMovies();
-        List<Integer> matchedIds = new ArrayList<>(ids.size());
-        List<Integer> notMatchedIds = new ArrayList<>(ids.size());
+        List<String> matchedIds = new ArrayList<>(ids.size());
+        List<String> notMatchedIds = new ArrayList<>(ids.size());
         String errorMsg = "The movie id ";
         String checkMsg = "The movie id ";
         for (var id :
@@ -105,7 +92,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public String removeSingleMovie(int id) {
+    public String removeSingleMovie(String id) {
         if (isMovieExisted(id)) {
             mapper.removeSingleMovie(id);
             return "Movie " + id + " removed";
@@ -114,7 +101,7 @@ public class MovieServiceImpl implements MovieService {
         }
     }
 
-    private boolean isMovieExisted(int id) {
+    private boolean isMovieExisted(String id) {
         BangumiMovie movieGet;
         try {
             movieGet = getSingleMovie(id);
@@ -133,7 +120,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public BangumiMovie getSingleMovie(int id) {
+    public BangumiMovie getSingleMovie(String id) {
         return mapper.getSingleMovie(id);
     }
 

@@ -11,13 +11,13 @@ public interface MovieService {
 
     String addSingleMovie(BangumiMovie movie);
 
-    String removeMovies(List<Integer> ids);
+    String removeMovies(List<String> ids);
 
-    String removeSingleMovie(int id);
+    String removeSingleMovie(String id);
 
     String updateMovie(BangumiMovie movie);
 
-    BangumiMovie getSingleMovie(int id);
+    BangumiMovie getSingleMovie(String id);
 
     List<BangumiMovie> getMovies();
 

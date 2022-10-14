@@ -12,11 +12,12 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class BangumiWatchingOld {
-    private long bangumiNotOldId;
-    private long bangumiId;
+    private String bangumiNotOldId;
+    private String bangumiId;
     private int companyId;
     private int typeId;
     private Date bangumiAddDate;
     private int bangumiWatchedEpisode;
     private User addedUser;
+    private String bangumiOldRemark;
 }

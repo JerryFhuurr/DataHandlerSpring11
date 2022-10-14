@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import java.util.Date;
 
@@ -15,10 +16,12 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class BangumiMovie {
-    private long movieId;
+    private String movieId;
     @NotBlank (message = "The name cannot be empty !", groups = MovieValidate.class)
+    @NotNull(message = "The name cannot be empty !", groups = MovieValidate.class)
     private String movieNameJp;
     @NotBlank (message = "The name cannot be empty !", groups = MovieValidate.class)
+    @NotNull (message = "The name cannot be empty !", groups = MovieValidate.class)
     private String movieNameCn;
     @PastOrPresent(message = "The date should be today or before!", groups = MovieValidate.class)
     private Date movieAddDate;
@@ -31,5 +34,6 @@ public class BangumiMovie {
      */
     @PastOrPresent(message = "The date should be today or before!", groups = MovieValidate.class)
     private Date movieStartDate;
+    private String movieRemark;
     private User addedUser;
 }

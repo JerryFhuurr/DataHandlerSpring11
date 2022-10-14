@@ -1,6 +1,8 @@
 package com.spring.handler.datahandlerspring11.controller;
 
 import com.spring.handler.datahandlerspring11.model.BangumiMovie;
+import com.spring.handler.datahandlerspring11.model.MovieParamList;
+import com.spring.handler.datahandlerspring11.model.MovieParamSingle;
 import com.spring.handler.datahandlerspring11.model.User;
 import com.spring.handler.datahandlerspring11.services.MovieService;
 import com.spring.handler.datahandlerspring11.services.validateGroup.MovieValidate;
@@ -22,7 +24,9 @@ public class BangumiMovieController {
     MovieService movieServices;
 
     @PostMapping("add/more")
-    String addMovies(@RequestBody @Validated(MovieValidate.class) List<BangumiMovie> movies, @RequestBody @Validated(UserValidate.class) User currentUser) {
+    String addMovies(@RequestBody MovieParamList paramList) {
+        List<BangumiMovie> movies = paramList.getMovies();
+        User currentUser = paramList.getCurrentUser();
         for (var movie :
                 movies) {
             movie.setAddedUser(currentUser);
@@ -31,18 +35,21 @@ public class BangumiMovieController {
     }
 
     @PostMapping("add/single")
-    String addSingleMovie(@RequestBody @Validated(MovieValidate.class) BangumiMovie movie, @RequestBody @Validated(UserValidate.class) User currentUser) {
+    String addSingleMovie(@RequestBody MovieParamSingle paramSingle) {
+        BangumiMovie movie = paramSingle.getMovie();
+        User currentUser = paramSingle.getCurrentUser();
+        System.out.println("user "+currentUser);
         movie.setAddedUser(currentUser);
         return movieServices.addSingleMovie(movie);
     }
 
     @DeleteMapping("remove/more")
-    String removeMovies(@RequestBody List<Integer> ids) {
+    String removeMovies(@RequestBody List<String> ids) {
         return movieServices.removeMovies(ids);
     }
 
     @DeleteMapping("remove/single")
-    String removeSingleMovie(int id) {
+    String removeSingleMovie(String id) {
         return movieServices.removeSingleMovie(id);
     }
 
@@ -62,7 +69,7 @@ public class BangumiMovieController {
     }
 
     @GetMapping("get/single")
-    BangumiMovie getSingleMovie(int id) {
+    BangumiMovie getSingleMovie(String id) {
         return movieServices.getSingleMovie(id);
     }
 

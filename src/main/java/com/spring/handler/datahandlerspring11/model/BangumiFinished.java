@@ -12,11 +12,12 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class BangumiFinished {
-    private long bangumiFinishedId;
-    private long bangumiId;
+    private String bangumiFinishedId;
+    private String bangumiId;
     private int companyId;
     private int typeId;
     private int finishedYear;
     private Date finishedDate;
     private User addedUser;
+    private String bangumiFinishedRemark;
 }

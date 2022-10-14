@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class Bangumi {
-    private long bangumiId;
+    private String bangumiId;
     private int companyId;
     private int typeId;
     private String bangumiNameJp;
@@ -31,4 +31,5 @@ public class Bangumi {
      */
     private Date bangumiDate;
     private User addedUser;
+    private String bangumiRemark;
 }
